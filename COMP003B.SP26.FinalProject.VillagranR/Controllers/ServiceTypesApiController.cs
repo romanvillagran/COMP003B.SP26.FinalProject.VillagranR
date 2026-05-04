@@ -2,6 +2,7 @@
 using COMP003B.SP26.FinalProject.VillagranR.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
 {
@@ -48,7 +49,18 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
         {
             var existing = _context.serviceTypes.FirstOrDefault(s => s.ServiceTypeId == id);
 
-            if exi
+            if (existing is null)
+                return NotFound();
+
+            existing.ServiceName = updateserviceType.ServiceName;
+            existing.Description =  updateserviceType.Description;
+            existing.Price = updateserviceType.Price;
+            existing.EstimatedHours = updateserviceType.EstimatedHours;
+            existing.IsActive = existing.IsActive;
+
+            _context.SaveChanges();
+
+            return NoContent(); 
         }
 
     }
