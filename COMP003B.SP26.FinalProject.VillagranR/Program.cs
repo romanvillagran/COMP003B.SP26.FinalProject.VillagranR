@@ -1,4 +1,5 @@
 using COMP003B.SP26.FinalProject.VillagranR.Data;
+using COMP003B.SP26.FinalProject.VillagranR.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 namespace COMP003B.SP26.FinalProject.VillagranR
