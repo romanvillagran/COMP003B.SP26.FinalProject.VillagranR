@@ -63,5 +63,20 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
             return NoContent(); 
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult DeleteServiceType(int id)
+        {
+            var serviceType = _context.serviceTypes.FirstOrDefault(s => s.ServiceTypeId == id);
+
+
+            if (serviceType is null) 
+                return NotFound();
+
+            _context.serviceTypes.Remove(serviceType);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
     }
 }
