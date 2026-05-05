@@ -1,3 +1,7 @@
+// Author: Roman villagran
+// Course: COMP-003B: ASP.NET Core
+// Instructor: Jonathan Cruz
+// Purpose: Final project synthesizing MVC, Web API, EF Core, and middleware
 using COMP003B.SP26.FinalProject.VillagranR.Data;
 using COMP003B.SP26.FinalProject.VillagranR.Middleware;
 using Microsoft.EntityFrameworkCore;
