@@ -53,6 +53,8 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
             ViewData["MechanicId"] = new SelectList(_context.mechanics, "MechanicId", "Name");
             ViewData["ServiceTypeId"] = new SelectList(_context.serviceTypes, "ServiceTypeId", "Description");
             ViewData["VehicleId"] = new SelectList(_context.vehicles, "VehicleId", "Model");
+            ViewData["CustomerId"] = new SelectList(_context.customers, "CustomerId", "Phone");
+
             return View();
         }
 
