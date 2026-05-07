@@ -50,9 +50,9 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
         // GET: ServiceAppointments/Create
         public IActionResult Create()
         {
-            ViewData["MechanicId"] = new SelectList(_context.mechanics, "MechanicId", "CertificationNumber");
+            ViewData["MechanicId"] = new SelectList(_context.mechanics, "MechanicId", "Name");
             ViewData["ServiceTypeId"] = new SelectList(_context.serviceTypes, "ServiceTypeId", "Description");
-            ViewData["VehicleId"] = new SelectList(_context.vehicles, "VehicleId", "LicensePlate");
+            ViewData["VehicleId"] = new SelectList(_context.vehicles, "VehicleId", "Model");
             return View();
         }
 
