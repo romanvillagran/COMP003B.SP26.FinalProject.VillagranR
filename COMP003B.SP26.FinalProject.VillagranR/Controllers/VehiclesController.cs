@@ -48,6 +48,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
         // GET: Vehicles/Create
         public IActionResult Create()
         {
+            ViewData["CustomerId"] = new SelectList(_context.customers,"CustomerId","Name");
             return View();
         }
 
@@ -81,7 +82,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
             {
                 return NotFound();
             }
-            ViewData["CustomerId"] = new SelectList(_context.customers, "CustomerId", "Address", vehicle.CustomerId);
+            ViewData["CustomerId"] = new SelectList(_context.customers, "CustomerId", "Name");
             return View(vehicle);
         }
 
