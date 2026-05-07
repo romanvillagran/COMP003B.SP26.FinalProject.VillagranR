@@ -4,7 +4,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Models
 {
     public class Vehicle
     {
-        public int Id { get; set; }
+        public int VehicleId { get; set; }
 
         [Required]
         [StringLength(30)]

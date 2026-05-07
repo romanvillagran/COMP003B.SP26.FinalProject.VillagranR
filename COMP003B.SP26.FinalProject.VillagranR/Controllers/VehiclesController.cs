@@ -36,7 +36,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
 
             var vehicle = await _context.vehicles
                 .Include(v => v.Customer)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.VehicleId == id);
             if (vehicle == null)
             {
                 return NotFound();
@@ -48,7 +48,6 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
         // GET: Vehicles/Create
         public IActionResult Create()
         {
-            ViewData["CustomerId"] = new SelectList(_context.customers, "Id", "Address");
             return View();
         }
 
@@ -57,7 +56,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Make,Model,Year,LicensePlate,Mileage,CustomerId")] Vehicle vehicle)
+        public async Task<IActionResult> Create([Bind("VehicleId,Make,Model,Year,LicensePlate,Mileage,CustomerId")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +64,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.customers, "Id", "Address", vehicle.CustomerId);
+            ViewData["CustomerId"] = new SelectList(_context.customers, "CustomerId", "Address", vehicle.CustomerId);
             return View(vehicle);
         }
 
@@ -82,7 +81,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
             {
                 return NotFound();
             }
-            ViewData["CustomerId"] = new SelectList(_context.customers, "Id", "Address", vehicle.CustomerId);
+            ViewData["CustomerId"] = new SelectList(_context.customers, "CustomerId", "Address", vehicle.CustomerId);
             return View(vehicle);
         }
 
@@ -91,9 +90,9 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Make,Model,Year,LicensePlate,Mileage,CustomerId")] Vehicle vehicle)
+        public async Task<IActionResult> Edit(int id, [Bind("VehicleId,Make,Model,Year,LicensePlate,Mileage,CustomerId")] Vehicle vehicle)
         {
-            if (id != vehicle.Id)
+            if (id != vehicle.VehicleId)
             {
                 return NotFound();
             }
@@ -107,7 +106,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!VehicleExists(vehicle.Id))
+                    if (!VehicleExists(vehicle.VehicleId))
                     {
                         return NotFound();
                     }
@@ -118,7 +117,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.customers, "Id", "Address", vehicle.CustomerId);
+            ViewData["CustomerId"] = new SelectList(_context.customers, "CustomerId", "Address", vehicle.CustomerId);
             return View(vehicle);
         }
 
@@ -132,7 +131,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
 
             var vehicle = await _context.vehicles
                 .Include(v => v.Customer)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.VehicleId == id);
             if (vehicle == null)
             {
                 return NotFound();
@@ -158,7 +157,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
 
         private bool VehicleExists(int id)
         {
-            return _context.vehicles.Any(e => e.Id == id);
+            return _context.vehicles.Any(e => e.VehicleId == id);
         }
     }
 }

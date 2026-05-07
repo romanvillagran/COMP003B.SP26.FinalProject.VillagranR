@@ -4,11 +4,12 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Models
 {
     public class Customer
     {
-        public int Id { get; set; }
+        public int CustomerId { get; set; }
 
         [Required]
         [StringLength(30)]
         public string? Name { get; set; }
+     
 
         [Required]
         [EmailAddress]

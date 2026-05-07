@@ -22,7 +22,8 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
         // GET: ServiceAppointments
         public async Task<IActionResult> Index()
         {
-            return View(await _context.serviceAppointment.ToListAsync());
+            var applicationDbContext = _context.serviceAppointment.Include(s => s.Mechanic).Include(s => s.ServiceType).Include(s => s.Vehicle);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: ServiceAppointments/Details/5
@@ -34,6 +35,9 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
             }
 
             var serviceAppointment = await _context.serviceAppointment
+                .Include(s => s.Mechanic)
+                .Include(s => s.ServiceType)
+                .Include(s => s.Vehicle)
                 .FirstOrDefaultAsync(m => m.ServiceAppointmentId == id);
             if (serviceAppointment == null)
             {
@@ -46,6 +50,9 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
         // GET: ServiceAppointments/Create
         public IActionResult Create()
         {
+            ViewData["MechanicId"] = new SelectList(_context.mechanics, "MechanicId", "CertificationNumber");
+            ViewData["ServiceTypeId"] = new SelectList(_context.serviceTypes, "ServiceTypeId", "Description");
+            ViewData["VehicleId"] = new SelectList(_context.vehicles, "VehicleId", "LicensePlate");
             return View();
         }
 
@@ -54,7 +61,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ServiceAppointmentId")] ServiceAppointment serviceAppointment)
+        public async Task<IActionResult> Create([Bind("ServiceAppointmentId,VehicleId,MechanicId,ServiceTypeId")] ServiceAppointment serviceAppointment)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +69,9 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["MechanicId"] = new SelectList(_context.mechanics, "MechanicId", "CertificationNumber", serviceAppointment.MechanicId);
+            ViewData["ServiceTypeId"] = new SelectList(_context.serviceTypes, "ServiceTypeId", "Description", serviceAppointment.ServiceTypeId);
+            ViewData["VehicleId"] = new SelectList(_context.vehicles, "VehicleId", "LicensePlate", serviceAppointment.VehicleId);
             return View(serviceAppointment);
         }
 
@@ -78,6 +88,9 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
             {
                 return NotFound();
             }
+            ViewData["MechanicId"] = new SelectList(_context.mechanics, "MechanicId", "CertificationNumber", serviceAppointment.MechanicId);
+            ViewData["ServiceTypeId"] = new SelectList(_context.serviceTypes, "ServiceTypeId", "Description", serviceAppointment.ServiceTypeId);
+            ViewData["VehicleId"] = new SelectList(_context.vehicles, "VehicleId", "LicensePlate", serviceAppointment.VehicleId);
             return View(serviceAppointment);
         }
 
@@ -86,7 +99,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ServiceAppointmentId")] ServiceAppointment serviceAppointment)
+        public async Task<IActionResult> Edit(int id, [Bind("ServiceAppointmentId,VehicleId,MechanicId,ServiceTypeId")] ServiceAppointment serviceAppointment)
         {
             if (id != serviceAppointment.ServiceAppointmentId)
             {
@@ -113,6 +126,9 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["MechanicId"] = new SelectList(_context.mechanics, "MechanicId", "CertificationNumber", serviceAppointment.MechanicId);
+            ViewData["ServiceTypeId"] = new SelectList(_context.serviceTypes, "ServiceTypeId", "Description", serviceAppointment.ServiceTypeId);
+            ViewData["VehicleId"] = new SelectList(_context.vehicles, "VehicleId", "LicensePlate", serviceAppointment.VehicleId);
             return View(serviceAppointment);
         }
 
@@ -125,6 +141,9 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
             }
 
             var serviceAppointment = await _context.serviceAppointment
+                .Include(s => s.Mechanic)
+                .Include(s => s.ServiceType)
+                .Include(s => s.Vehicle)
                 .FirstOrDefaultAsync(m => m.ServiceAppointmentId == id);
             if (serviceAppointment == null)
             {

@@ -23,11 +23,11 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Migrations
 
             modelBuilder.Entity("COMP003B.SP26.FinalProject.VillagranR.Models.Customer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -42,7 +42,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("CustomerId");
 
                     b.ToTable("customers");
                 });
@@ -92,13 +92,13 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceAppointmentId"));
 
-                    b.Property<int?>("MechanicId")
+                    b.Property<int>("MechanicId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ServiceTypeId")
+                    b.Property<int>("ServiceTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("VehicleId")
+                    b.Property<int>("VehicleId")
                         .HasColumnType("int");
 
                     b.HasKey("ServiceAppointmentId");
@@ -146,11 +146,11 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Migrations
 
             modelBuilder.Entity("COMP003B.SP26.FinalProject.VillagranR.Models.Vehicle", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("VehicleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VehicleId"));
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -176,7 +176,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Migrations
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("VehicleId");
 
                     b.HasIndex("CustomerId");
 
@@ -187,15 +187,21 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Migrations
                 {
                     b.HasOne("COMP003B.SP26.FinalProject.VillagranR.Models.Mechanic", "Mechanic")
                         .WithMany("serviceAppointments")
-                        .HasForeignKey("MechanicId");
+                        .HasForeignKey("MechanicId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("COMP003B.SP26.FinalProject.VillagranR.Models.ServiceType", "ServiceType")
                         .WithMany("ServiceAppointments")
-                        .HasForeignKey("ServiceTypeId");
+                        .HasForeignKey("ServiceTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("COMP003B.SP26.FinalProject.VillagranR.Models.Vehicle", "Vehicle")
                         .WithMany("ServiceAppointment")
-                        .HasForeignKey("VehicleId");
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Mechanic");
 

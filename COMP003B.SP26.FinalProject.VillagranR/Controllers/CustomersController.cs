@@ -34,7 +34,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
             }
 
             var customer = await _context.customers
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.CustomerId == id);
             if (customer == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Address,Phone")] Customer customer)
+        public async Task<IActionResult> Create([Bind("CustomerId,Name,Address,Phone")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -86,9 +86,9 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,Phone")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("CustomerId,Name,Address,Phone")] Customer customer)
         {
-            if (id != customer.Id)
+            if (id != customer.CustomerId)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerExists(customer.Id))
+                    if (!CustomerExists(customer.CustomerId))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
             }
 
             var customer = await _context.customers
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.CustomerId == id);
             if (customer == null)
             {
                 return NotFound();
@@ -151,7 +151,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
 
         private bool CustomerExists(int id)
         {
-            return _context.customers.Any(e => e.Id == id);
+            return _context.customers.Any(e => e.CustomerId == id);
         }
     }
 }

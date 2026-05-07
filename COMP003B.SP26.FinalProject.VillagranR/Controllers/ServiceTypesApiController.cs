@@ -23,7 +23,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
             return Ok(_context.serviceTypes.ToList);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public ActionResult<ServiceType> GetServiceType(int id)
         {
             var serviceType = _context.serviceTypes.FirstOrDefault(s => s.ServiceTypeId == id);
@@ -44,7 +44,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
 
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public IActionResult UpdateServiceType(int id, ServiceType updateserviceType)
         {
             var existing = _context.serviceTypes.FirstOrDefault(s => s.ServiceTypeId == id);
@@ -63,7 +63,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Controllers
             return NoContent(); 
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public IActionResult DeleteServiceType(int id)
         {
             var serviceType = _context.serviceTypes.FirstOrDefault(s => s.ServiceTypeId == id);

@@ -14,7 +14,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Migrations
                 name: "customers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    CustomerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -22,7 +22,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_customers", x => x.Id);
+                    table.PrimaryKey("PK_customers", x => x.CustomerId);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,7 +64,7 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Migrations
                 name: "vehicles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    VehicleId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Make = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Model = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
@@ -75,12 +75,12 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_vehicles", x => x.Id);
+                    table.PrimaryKey("PK_vehicles", x => x.VehicleId);
                     table.ForeignKey(
                         name: "FK_vehicles_customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "customers",
-                        principalColumn: "Id",
+                        principalColumn: "CustomerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -90,9 +90,9 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Migrations
                 {
                     ServiceAppointmentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    VehicleId = table.Column<int>(type: "int", nullable: true),
-                    MechanicId = table.Column<int>(type: "int", nullable: true),
-                    ServiceTypeId = table.Column<int>(type: "int", nullable: true)
+                    VehicleId = table.Column<int>(type: "int", nullable: false),
+                    MechanicId = table.Column<int>(type: "int", nullable: false),
+                    ServiceTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -101,17 +101,20 @@ namespace COMP003B.SP26.FinalProject.VillagranR.Migrations
                         name: "FK_serviceAppointment_mechanics_MechanicId",
                         column: x => x.MechanicId,
                         principalTable: "mechanics",
-                        principalColumn: "MechanicId");
+                        principalColumn: "MechanicId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_serviceAppointment_serviceTypes_ServiceTypeId",
                         column: x => x.ServiceTypeId,
                         principalTable: "serviceTypes",
-                        principalColumn: "ServiceTypeId");
+                        principalColumn: "ServiceTypeId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_serviceAppointment_vehicles_VehicleId",
                         column: x => x.VehicleId,
                         principalTable: "vehicles",
-                        principalColumn: "Id");
+                        principalColumn: "VehicleId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
